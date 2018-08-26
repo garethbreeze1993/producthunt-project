@@ -131,3 +131,10 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# how to tell django where to look for media files we copied and pasted from databases
+# but changed the string to the media directory
+
+MEDIA_URL = '/media/'
+# where can they access the image, the image folder will be in the media directory
