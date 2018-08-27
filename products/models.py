@@ -3,7 +3,7 @@ from django.contrib.auth.models import User # imports all users we created eithe
 
 class Product(models.Model):
     title = models.CharField(max_length=140)
-    url = models.URLField(max_length=200)
+    url = models.CharField(max_length=300)
     pub_date = models.DateTimeField()
     votes_total = models.IntegerField(default=1)
     image = models.ImageField(upload_to = 'images/')
