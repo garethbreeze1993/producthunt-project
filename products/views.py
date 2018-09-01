@@ -4,7 +4,8 @@ from . models import Product
 from django.utils import timezone
 
 def home(request):
-    return render(request, 'products/home.html')
+    products = Product.objects
+    return render(request, 'products/home.html', {'products':products})
 	
 @login_required # means user has to be logged in to the website to access this page/function
 def create(request):
@@ -22,7 +23,7 @@ def create(request):
             product.pub_date = timezone.datetime.now()
             product.hunter = request.user# MAKES THE HUNTER OF THE PRODUCT THE CURRENT LOGGED IN USER
             product.save() # saves all this shit into the database.
-            return redirect('/products/' + str(product.id))			
+            return redirect('/products/' + str(product.id))# takes us to our site with our product str is needed			
 			
         else:
             return render(request, 'products/create.html', {'error':'Please fill out all parts of the form'})		
@@ -33,4 +34,14 @@ def create(request):
 
 def detail(request, product_id):
     product_detail = get_object_or_404(Product, pk=product_id)
-    return render(request,'products/detail.html', {'product':product_detail})	
+    return render(request,'products/detail.html', {'product':product_detail})
+
+@login_required 	
+def upvote(request, product_id):
+    if request.method == "POST":
+        product = get_object_or_404(Product, pk=product_id)		
+        product.votes_total += 1
+        product.save() # this is needed see earlier comment
+        return redirect('/products/' + str(product.id))			
+
+	
